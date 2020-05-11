@@ -1,4 +1,5 @@
 const { SOFTWARE_VERSION, DB_QUERY, DISC_SPACE } = require('./OID_Constants.js'); // import OID constants
+const db = require('../config/database.js');
 
 class Snmp {
     softwareVersionNo = '6.1.1'; // we can return the static string against the first OID (as per requirement)
@@ -7,8 +8,8 @@ class Snmp {
     //  but to keep the things simple, I'm declaring it in this way. It is not recommended thou
 
     // you need to change this username and password as per your login roles for DB
-    db_userName = 'umershaikh';
-    db_password = '12345';
+    // db_userName = 'umershaikh';
+    // db_password = '12345';
 
     // This trap function will recieve OIDs as an argument, and then perform tasks based on these OIDs 
     trap = (oids = []) => {
@@ -18,7 +19,9 @@ class Snmp {
                     console.log(`${oid} = STRING: '${this.softwareVersionNo}'`);
                     break;
                 case DB_QUERY:
-                    const connectionString = `postgres://${this.db_userName}:${this.db_password}@localhost/afinitiTest`
+                    db.authenticate()
+                        .then(() => { console.log('connected') })
+                        .catch((error) => { console.log(error) })
                     break;
                 case DISC_SPACE:
                     console.log(oid);
