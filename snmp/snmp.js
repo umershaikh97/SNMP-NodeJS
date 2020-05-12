@@ -36,10 +36,10 @@ class Snmp {
                         .catch(() => { console.log(`Failed for OID: ${oid} (error in fetching data from DB)`) });
                     break;
                 case DISC_SPACE:
-                    console.log(oid);
+
                     break;
                 default:
-                    console.log('Invalid OID');
+                    console.log(`${oid}: Invalid OID`);
                     break;
             }
 
